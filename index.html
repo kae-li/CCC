@@ -92,7 +92,7 @@
 											<a href="#" class="image"><img src="https://github.com/kae-li/CCC/raw/main/TCCB (inside).jpg" alt="TCCB (inside)" /></a>
 											<div class="inner">
 												<h4>Archival Extraction & Recipe Corpus Formation</h4>
-												<p>The archival anchor for this project was Shiu Wong Chan’s The Chinese Cook Book (1917), a foundational text in the history of Chinese cuisine in the Western world. Published in New York, Chan’s work represents one of the earliest comprehensive attempts to systematize and translate Chinese culinary practice for an American audience. As a historical touchstone, it is positioned at the intersection of two cultures and provides a baseline against which to measure subsequent evolutions in the representation of Chinese cooking. I first completed a full survey of the text and generated a dataset using Google Sheets of all recipes that contained complete ingredient lists. This resulted in a working corpus of 143 recipes, excluding preliminary instructional entries, such as how to make peanut oil or cook rice, which contained rudimentary or incomparable structures for analysis.</p>
+												<p>The archival anchor for this project was Shiu Wong Chan’s <i>The Chinese Cook Book</i> (1917), a foundational text in the history of Chinese cuisine in the Western world. Published in New York, Chan’s work represents one of the earliest comprehensive attempts to systematize and translate Chinese culinary practice for an American audience. As a historical touchstone, it is positioned at the intersection of two cultures and provides a baseline against which to measure subsequent evolutions in the representation of Chinese cooking. I first completed a full survey of the text and generated a <a href="https://docs.google.com/spreadsheets/d/1SkmzCn7s6kAwTWKMb-XmCgfdvFFV6eoWnJOUgjvFgAg/edit?usp=sharing">dataset</a> using Google Sheets of all recipes that contained complete ingredient lists. This resulted in a working corpus of 143 recipes, excluding preliminary instructional entries, such as how to make peanut oil or cook rice, which contained rudimentary or incomparable structures for analysis.</p>
 												<p>For each recipe, I manually extracted metadata, including:</p>
 												<ul>
 													<li>Recipe ID</li>
@@ -101,7 +101,6 @@
 													<li>Author</li>
 													<li>Ingredients</li>
 													<li>Page Number</li>
-													<li></li>
 												</ul>										
 <p>This step allowed the cookbook to function as both a culinary archive and cultural document, reflecting early 20th-century negotiations of authenticity, legibility, and assimilation in Chinese-American food.
 </p>
@@ -111,21 +110,56 @@
 											<a href="#" class="image"><https://github.com/kae-li/CCC/raw/main/Zhe-ZHANG_ChineseFood_Unsplash.jpg" alt="Dim Sum" /></a>
 											<div class="inner">
 												<h4>Selection of Modern Comparative Sources</h4>
-												<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
+												<p>To establish a contemporary dataset, I identified five widely-read modern digital authors whose work represents the ongoing evolution of Chinese culinary practice for a global, English-speaking audience. The selection was designed to capture a diversity of perspectives within the border Chinese diaspora:</p>
+												<ul>
+													<li><i><a href="https://whattocooktoday.com/">What To Cook Today</a></i> (<a href="https://whattocooktoday.com/about">Goh, Marvellina</a>)</li>
+													<li><a href="https://www.madewithlau.com/">Made With Lau</a> (<a href="https://www.madewithlau.com/family">Lau, Chung Sun</a>)</li>
+													<li><a href="https://thewoksoflife.com/">The Woks of Life</a> (<a href="https://thewoksoflife.com/about/">Leung Family</a>)</li>
+													<li><a href="https://rasamalaysia.com/">Rasa Malaysia</a> (<a href="https://rasamalaysia.com/about/">Low, Bee Yinn</a>)</li>
+													<li><a href="https://omnivorescookbook.com/">Omnivore’s Cookbook</a> (<a href="https://omnivorescookbook.com/about/">Zhu, Maggie</a>)</li>
+												</ul>
 											</div>
 										</article>
 										<article>
 											<a href="#" class="image"><https://github.com/kae-li/CCC/raw/main/rubaitul-azad_GoogleSheets_unsplash.jpg" alt="Google Sheets Icon" /></a>
 											<div class="inner">
 												<h4>Cross-Referencing & Dataset Refinment</h4>
-												<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
+												<p>For each of the 143 historical recipes in Chan’s corpus, a systemic search was conducted across the digital archives (primarily their official websites) of the five selected modern authors. The search protocol involved using Chan’s recipe titles and key ingredients as search terms. This process was iterative and required culinary and cultural judgment; for instance, a modern “Shrimp Egg Foo Young” was accepted as a valid iteration of Chan’s “Shrimp Omelet” if the core recipe and primary ingredients aligned, even if the nomenclature had evolved.</p>
+												<p>The initial phase aimed for breadth, gathering all potential modern counterparts. This resulted in an uneven distribution, with some of Chan’s recipes having numerous modern versions and others having very few or none. To ensure a balanced and analytically sound dataset for network analysis, I implemented a final filtering criterion. I identified 24 of Chan’s recipes that each had a range of three to five clearly identifiable modern iterations from the selected authors. This yielded a final network dataset comprising 24 historical nodes (Chan’s recipes) and 93 modern nodes (3-5 modern versions for each), for a total of 117 recipe nodes. </p>
 											</div>
 										</article>
 										<article>
 											<a href="#" class="image"><img src="https://github.com/kae-li/CCC/raw/main/CCC.png" alt="CCC network static image" /></a>
 											<div class="inner">
 												<h4>Network Visualization & Aesthetic Coding</h4>
-												<p>Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer adipiscing ornare amet.</p>
+												<p>I constructed a single, unified network where all recipes—both historical and modern—served as nodes, and modifications between them formed the edges. This model directly captures the evolutionary relationship between recipes without intermediate modification nodes, creating a more intuitive visualization of culinary genealogy. Rather than treating modifications as separate entities, I encoded them as properties of the directional edges connecting recipes, with each edge representing a specific revision pathway from a source recipe to its descendant.</p>
+												<p>Each node in the network represents an individual recipe, annotated with metadata including author, publication year, era (historical/modern), and core recipe identifier. Each edge represents a direct modification relationship, characterized by three fundamental types of changes:</p>
+												<ul>
+													<li>Inserts (additions): Introduction of a new ingredient not present in the source recipe</li>
+													<li>Deletes (removals): Omission of ingredients from the source recipe</li>
+													<li>Updates (substitutions): replacement of ingredients from the source recipe</li>
+												</ul>
+												<p>The directionality of edges always flows from earlier to later recipes, creating a clear temporal and evolutionary pathway from historical foundations to contemporary adaptations.</p>
+												<p>I implemented the network using Cytoscape (version 3.10.4), employing a custom layout to spatialize the data. I created a custom layout called “Recipe Modifications” to effectively visualize the relationships between recipe families.My aesthetic encoding scheme aimed to enhance the network’s interceptability:</p>
+												<ul>
+													<li>Node coloring by author: Chan and each modern author received a distinct color for immediate visual identification</li>
+													<ul>
+													<li><i>The Chinese Cook Book</i></li>
+													<li><i>What To Cook Today</i></li>
+													<li><i>Made with Lau</i></li>
+													<li><i>The Woks of Life</i></li>
+													<li><i>RasaMalaysia</i></li>
+													<li><i>Omnivore’s Cookbook</i></li>
+													</ul>
+													<li>Edge coloring by modification type: Edges were classified under a color-coded system based on their style</li>
+													<ul>
+														<li>Original source</li>
+														<li>Insert</li>
+														<li>Delete</li>
+														<li>Update</li>
+													</ul>
+												</ul>
+												<p>This unified network model, with its carefully designed visual coding, enables both macroscoping analysis of broad evolutionary patterns and microscopic examinations of individual recipe relationships, revealing how Chinese culinary practice has been preserved, adapted, and transformed across a century of diaspora and globalization.</p>
 											</div>
 										</article>
 									</div>
@@ -558,6 +592,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 	</body>
 
 </html>
+
 
 
 
